@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "target": "ES6",
+    "module": "CommonJS",
+    "outDir": "./dist",
+    "strict": true,
+    "declaration": true
+  },
+  "include": ["src/**/*"], // Where your TypeScript source files are
+  "paths": {
+      "@utils/*": ["utils/*"] 
+    }
+}
