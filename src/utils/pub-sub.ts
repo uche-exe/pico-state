@@ -35,6 +35,9 @@ export class PubSub {
             ...this._callbackList,
             { callback, config }
         ];
-        return true;
+        // Return an unsubscribe function
+        return () => {
+            this._callbackList = this._callbackList.filter(item => item.callback !== callback);
+        };
     }
 }

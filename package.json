@@ -1,13 +1,13 @@
 {
   "name": "@uche-exe/statey",
-  "version": "1.0.1",
-  "description": "A simple and lightweight state management library for vanilla JavaScript and TypeScript apps.", 
-  "main": "index.js",
-  "types": "index.d.ts", 
+  "version": "1.0.5",
+  "description": "A simple and lightweight state management library for vanilla JavaScript and TypeScript apps.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prepublishOnly": "npm run build" 
+    "prepublishOnly": "npm run build"
   },
   "keywords": [
     "state management",
@@ -18,12 +18,12 @@
     "slices",
     "pubsub",
     "simple"
-  ], 
-  "author": "Uchechukwu Ottah coderboy.exe@gmail.com", 
+  ],
+  "author": "Uchechukwu Ottah coderboy.exe@gmail.com",
   "license": "MIT",
-  "repository": { 
+  "repository": {
     "type": "git",
-    "url": "git+https://github.com/uche-exe/statey.git" 
+    "url": "git+https://github.com/uche-exe/statey.git"
   },
   "devDependencies": {
     "typedoc": "^0.26.11",

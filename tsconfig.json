@@ -6,7 +6,7 @@
     "strict": true,
     "declaration": true
   },
-  "include": ["src/**/*"], // Where your TypeScript source files are
+  "include": ["src/**/*"],
   "paths": {
       "@utils/*": ["utils/*"] 
     }

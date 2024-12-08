@@ -1,5 +1,5 @@
-import { cloneObject, isObject, isString } from "./helpers";
-import { PubSub } from "./pub-sub";
+import { cloneObject, isObject, isString } from "./utils/helpers";
+import { PubSub } from "./utils/pub-sub";
 
 /**
  * Represents the overall state of the store. 
@@ -61,6 +61,7 @@ export interface CreateSliceProps<T> {
  *
  * @template T - The type of the new state value.
  * @property {string} [slice] - The name of the slice to update. If omitted, the entire store state is updated.
+ * @property {boolean} [replace] - Replace the entire selected entity with the passed value (defaults to False)
  * @property {T} value - The new state value to set.
  *
  * @example
@@ -68,19 +69,25 @@ export interface CreateSliceProps<T> {
  * // Set the state of the 'user' slice:
  * store.setState({ slice: 'user', value: { name: 'Jane' } });
  * 
- * // Set the entire store state:
+ * // Set/Update the entire store state:
  * store.setState({ value: { user: { name: 'Jane' }, products: [] } });
+ * 
+ * // Replace the entire store state:
+ * store.setState({ replace: true, value: { user: { name: 'Jane' }, products: [] } });
  * ```
  */
 export interface SetStateProps<T> {
     slice?: string;
     value: T;
+    replace?: boolean;
 }
 
 /**
  * Properties for initializing a new store instance.
  *
  * @property {string} [storeName] - An optional name for the store. Useful for debugging purposes.
+ * @property {boolean} [replace] - An optional parameter for replacing the current store entirely with the new "initialState" 
+ * (if a store with the same name already exists), else, it appends the new "initialState" value to the existing store - Defaults to False 
  * @property {StoreState} [initialState] - The initial state of the store, containing all slices and their initial values.
  *
  * @example
@@ -96,6 +103,7 @@ export interface SetStateProps<T> {
  */
 export interface StoreProps {
     storeName?: string,
+    replace?: boolean;
     initialState: StoreState;
 }
 
@@ -110,19 +118,33 @@ export class Store<T extends StoreState> {
     private _internalState: StoreState;
     private _pubSub: PubSub;
 
+    // Static registry to track all created stores
+    private static storeRegistry: { [name: string]: Store<any> } = {};
+
     /**
      * Creates a new store instance
      *
      * @param {StoreProps} props - The properties for initializing the store.
      */
-    constructor(props: StoreProps = { storeName: "appState", initialState: {} }) {
-        const { storeName, initialState } = props
+    constructor(props: StoreProps = { storeName: "appState", initialState: {}, replace: false }) {
+        const { storeName, initialState, replace } = props
         if (!isObject(initialState)) {
             throw new Error('initial state must be an object');
         }
         this._storeName = storeName ?? "appState";
-        this._internalState = cloneObject(initialState);
+
+        const existingStore = Store.storeRegistry[this._storeName];
+
         this._pubSub = new PubSub()
+        this._internalState = cloneObject(initialState);
+
+        if (existingStore) {
+            // If an existing store is found, update its state
+            existingStore.setState({ value: initialState, replace });
+            return existingStore;
+        }
+
+        Store.storeRegistry[this._storeName] = this;
         this.loadStateFromLocalStorage();
     }
 
@@ -130,6 +152,7 @@ export class Store<T extends StoreState> {
         if (typeof window !== 'undefined' && window.localStorage) {
             try {
                 const stateToSave = JSON.stringify(this.state);
+                console.info('Saving state to local storage...');
                 localStorage.setItem(this._storeName, stateToSave);
             } catch (error: any) {
                 console.error('Error saving state to local storage:', error);
@@ -142,6 +165,7 @@ export class Store<T extends StoreState> {
         if (typeof window !== 'undefined' && window.localStorage) {
             try {
                 const savedState = localStorage.getItem(this._storeName);
+                console.info('Loading state from local storage...');
                 if (savedState) {
                     this._internalState = JSON.parse(savedState);
                 }
@@ -171,10 +195,10 @@ export class Store<T extends StoreState> {
      * Sets the state of a specific slice, or the general application store state.
      *
      * @param {SetStateProps<Partial<T>>} props - The properties to set.
-     * @returns {StoreState} The current state of the store.
+     * @returns {Promise<StoreState>} A promise that resolves with the updated state of the store.
      */
-    setState(props: SetStateProps<T>): StoreState {
-        const { slice, value } = props;
+    async setState(props: SetStateProps<T>): Promise<StoreState> {
+        const { slice, value, replace } = props;
 
         if (!slice && !isObject(value)) {
             throw new Error('non-slice value must be an object');
@@ -187,12 +211,22 @@ export class Store<T extends StoreState> {
                 cloneObject(currentState),
                 cloneObject(value)
             );
-            this._internalState[slice] = nextState;
+            if (replace && replace === true) {
+                this._internalState[slice] = cloneObject(value);
+            } else {
+                this._internalState[slice] = nextState;
+            }
+        }
+        else if (!slice && replace && replace === true) {
+            this._internalState = value;
         } else {
             // Update the entire state
             this._internalState = { ...this._internalState, ...value };
         }
-        this._pubSub.publish(this.state, this.state);
+        //  Trigger the publishing operation at the end of the event loop
+        setTimeout(() => {
+            this._pubSub.publish(this.state, this.state);
+        }, 0);
         this.saveStateToLocalStorage();
         return this.state;
     }
