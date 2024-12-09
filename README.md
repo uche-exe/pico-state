@@ -35,7 +35,7 @@
 ## Installation
 
 ```bash
-npm install pico-state
+npm install @uche-exe/pico-state
 ```
 
 ## Getting Started
@@ -43,10 +43,10 @@ npm install pico-state
 ### 1. Import Pico-state:
 
 ```typescript
-import { Store } from "pico-state";
+import { Store } from "@uche-exe/pico-state";
 
 // Javascript
-const { Store } = require("pico-state");
+const { Store } = require("@uche-exe/pico-state");
 ```
 
 ### 2. Create a Store:
@@ -178,7 +178,7 @@ Returns: A function that can be called to unsubscribe the callback. -->
 - **Todo List:** A more complex example showing how to manage a list of todo items with slices and state updates.
 
 ```typescript
-import { Store } from "pico-state";
+import { Store } from "@uche-exe/pico-state";
 
 interface Todo {
   id: number;
