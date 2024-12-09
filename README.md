@@ -2,6 +2,25 @@
 
 Statey is a lightweight state management library designed for JavaScript and TypeScript projects. It offers a simple, intuitive API for managing your application state with minimal overhead. Whether you're building a small single-page application or a more complex project, Statey provides the essential tools to keep your state organized and predictable.
 
+## Table of Contents
+
+- [Key Features](#key-features)
+- [Installation](#installation)
+- [Getting Started](#getting-started)
+  - [1. Import Statey](#1-import-statey)
+  - [2. Create a Store](#2-create-a-store)
+  - [3. Create Slices](#3-create-slices)
+  - [4. Access and Update State](#4-access-and-update-state)
+- [API Documentation](#api-documentation)
+  - [`Store` Class](#store-class)
+    - [`constructor(props?: StoreProps)`](#constructorprops-storeprops)
+    - [`state: T` (getter)](#state-t-getter)
+    - [`setState(props: SetStateProps<Partial<T>>): Promise<StoreState>`](#setstateprops-setstatepropspartialt-promisestorstate) 
+    - [`createSlice<S extends Slice>(props: CreateSliceProps<S>): Store<StoreState & { [K in keyof S]: S[K] }>`](#createsliceprops-createslicepropss-storestorestate--k-in-keyof-s-ssk)
+- [LocalStorage Persistence](#localstorage-persistence)
+- [Examples](#examples)
+- [Contributing](#contributing)
+
 ## Key Features
 
 - **Lightweight:** With zero dependencies and a tiny footprint, Statey adds minimal overhead to your project.
