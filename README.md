@@ -1,6 +1,6 @@
 # Statey: Tiny State, Big Impact
 
-Statey is a featherweight state management library designed for JavaScript and TypeScript projects. It offers a simple, intuitive API for managing your application state with minimal overhead. Whether you're building a small single-page application or a more complex project, Statey provides the essential tools to keep your state organized and predictable.
+Statey is a lightweight state management library designed for JavaScript and TypeScript projects. It offers a simple, intuitive API for managing your application state with minimal overhead. Whether you're building a small single-page application or a more complex project, Statey provides the essential tools to keep your state organized and predictable.
 
 ## Key Features
 
@@ -182,7 +182,7 @@ const addTodo = async (text: string) => {
   });
 }
 
-// ... other functions for toggling completion, deleting todos, etc. ...
+// ... other functions for toggling todo completion, deleting todos, etc. ...
 ```
 
 ## Contributing
