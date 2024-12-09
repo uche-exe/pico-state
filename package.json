@@ -1,7 +1,7 @@
 {
-  "name": "@uche-exe/statey",
-  "version": "0.1.6",
-  "description": "A simple and lightweight state management library for vanilla JavaScript and TypeScript apps.",
+  "name": "@uche-exe/pico-state",
+  "version": "0.1.0",
+  "description": "A simple and lightweight state management library for JavaScript and TypeScript apps.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
@@ -23,7 +23,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/uche-exe/statey.git"
+    "url": "git+https://github.com/uche-exe/pico-state.git"
   },
   "devDependencies": {
     "typedoc": "^0.26.11",

@@ -1,13 +1,13 @@
-# Statey: Tiny State, Big Impact
+# Pico-state: Tiny State, Big Impact
 
-Statey is a lightweight state management library designed for JavaScript and TypeScript projects. It offers a simple, intuitive API for managing your application state with minimal overhead. Whether you're building a small single-page application or a more complex project, Statey provides the essential tools to keep your state organized and predictable.
+***Pico-state*** is a lightweight state management library designed for JavaScript and TypeScript projects. It offers a simple, intuitive API for managing your application state with minimal overhead. Whether you're building a small single-page application or a more complex project, **_Pico-state_** provides the essential tools to keep your state organized and predictable.
 
 ## Table of Contents
 
 - [Key Features](#key-features)
 - [Installation](#installation)
 - [Getting Started](#getting-started)
-  - [1. Import Statey](#1-import-statey)
+  - [1. Import Pico-state](#1-import-pico-state)
   - [2. Create a Store](#2-create-a-store)
   - [3. Create Slices](#3-create-slices)
   - [4. Access and Update State](#4-access-and-update-state)
@@ -23,10 +23,10 @@ Statey is a lightweight state management library designed for JavaScript and Typ
 
 ## Key Features
 
-- **Lightweight:** With zero dependencies and a tiny footprint, Statey adds minimal overhead to your project.
+- **Lightweight:** With zero dependencies and a tiny footprint, **_Pico-state_** adds minimal overhead to your project.
 - **Simplicity:** An easy-to-learn API makes state management a breeze, even for beginners.
 - **Slices:** Organize your state into logical slices for better maintainability and separation of concerns.
-- **Type Safety:** Built with TypeScript from the ground up, Statey provides strong typing and improved code quality.
+- **Type Safety:** Built with TypeScript from the ground up, **_Pico-state_** provides strong typing and improved code quality.
 - **LocalStorage Persistence:** Persist your application state to `localStorage` (browser only) for seamless user experiences.
 - **State Replacement:** Replace existing state values entirely with new values.
 - **Asynchronous State Updates:** Update state asynchronously to handle operations like fetching data and prevent UI blocking.
@@ -35,15 +35,15 @@ Statey is a lightweight state management library designed for JavaScript and Typ
 ## Installation
 
 ```bash
-npm install @uche-exe/statey
+npm install @uche-exe/pico-state
 ```
 
 ## Getting Started
 
-### 1. Import Statey:
+### 1. Import Pico-state:
 
 ```typescript
-import { Store } from "@uche-exe/statey";
+import { Store } from "@uche-exe/pico-state";
 ```
 
 ### 2. Create a Store:
@@ -157,7 +157,7 @@ Returns: A function that can be called to unsubscribe the callback. -->
 
 ## LocalStorage Persistence
 
-**_Statey_** provides optional persistence to localStorage in browser environments. This allows your application state to be saved between sessions, providing a smoother user experience.
+**_Pico-state_** provides optional persistence to localStorage in browser environments. This allows your application state to be saved between sessions, providing a smoother user experience.
 
 ### How it works:
 
@@ -175,7 +175,7 @@ Returns: A function that can be called to unsubscribe the callback. -->
 - **Todo List:** A more complex example showing how to manage a list of todo items with slices and state updates.
 
 ```typescript
-import { Store } from "@uche-exe/statey";
+import { Store } from "@uche-exe/pico-state";
 
 interface Todo {
   id: number;
