@@ -1,6 +1,6 @@
 # Pico-state: Tiny State, Big Impact
 
-***Pico-state*** is a lightweight state management library designed for JavaScript and TypeScript projects. It offers a simple, intuitive API for managing your application state with minimal overhead. Whether you're building a small single-page application or a more complex project, **_Pico-state_** provides the essential tools to keep your state organized and predictable.
+**_Pico-state_** is a lightweight state management library designed for JavaScript and TypeScript projects. It offers a simple, intuitive API for managing your application state with minimal overhead. Whether you're building a small single-page application or a more complex project, **_Pico-state_** provides the essential tools to keep your state organized and predictable.
 
 ## Table of Contents
 
@@ -15,7 +15,7 @@
   - [`Store` Class](#store-class)
     - [`constructor(props?: StoreProps)`](#constructorprops-storeprops)
     - [`state: T` (getter)](#state-t-getter)
-    - [`setState(props: SetStateProps<Partial<T>>): Promise<StoreState>`](#setstateprops-setstatepropspartialt-promisestorstate) 
+    - [`setState(props: SetStateProps<Partial<T>>): Promise<StoreState>`](#setstateprops-setstatepropspartialt-promisestorstate)
     - [`createSlice<S extends Slice>(props: CreateSliceProps<S>): Store<StoreState & { [K in keyof S]: S[K] }>`](#createsliceprops-createslicepropss-storestorestate--k-in-keyof-s-ssk)
 - [LocalStorage Persistence](#localstorage-persistence)
 - [Examples](#examples)
@@ -202,9 +202,46 @@ const addTodo = async (text: string) => {
     slice: "todos",
     value: [...store.state.todos, newTodo],
   });
-}
+};
 
-// ... other functions for toggling todo completion, deleting todos, etc. ...
+const toggleCompletion = async (id: number) => {
+  const updatedItems = store.state.todos.map((item) =>
+    item.id === id
+      ? {
+          completed: !item.completed,
+        }
+      : item
+  );
+  const updatedState = await store.setState({
+    slice: "todos",
+    value: updatedItems,
+  });
+};
+
+const updateTodo = async (id: number, data: Todo) => {
+  const updatedItems = store.state.todos.map((item) =>
+    item.id === id
+      ? {
+          ...item,
+          ...data,
+        }
+      : item
+  );
+  const updatedState = await store.setState({
+    slice: "todos",
+    value: updatedItems,
+  });
+};
+
+const deleteTodo = async (id) => {
+  const updatedItems = store.state.todos.filter((item) => item.id !== id);
+
+  const updatedState = await store.setState({
+    slice: "todos",
+    value: updatedItems,
+  });
+};
+
 ```
 
 ## Contributing

@@ -60,8 +60,8 @@ export interface CreateSliceProps<T> {
  * Properties for setting the state of a slice or the entire store.
  *
  * @template T - The type of the new state value.
- * @property {string} [slice] - The name of the slice to update. If omitted, the entire store state is updated.
- * @property {boolean} [replace] - Replace the entire selected entity with the passed value (defaults to False)
+ * @property {string} [slice] - The name of the slice to update. If omitted, the entire "Store" state is updated.
+ * @property {boolean} [replace] - Replace the entire "Store" entity with the passed value (defaults to False)
  * @property {T} value - The new state value to set.
  *
  * @example
@@ -69,7 +69,7 @@ export interface CreateSliceProps<T> {
  * // Set the state of the 'user' slice:
  * store.setState({ slice: 'user', value: { name: 'Jane' } });
  * 
- * // Set/Update the entire store state:
+ * // Set/Update the entire store state (adds the new values to the store):
  * store.setState({ value: { user: { name: 'Jane' }, products: [] } });
  * 
  * // Replace the entire store state:
@@ -211,11 +211,11 @@ export class Store<T extends StoreState> {
                 cloneObject(currentState),
                 cloneObject(value)
             );
-            if (replace && replace === true) {
+            // if (replace && replace === true) {
                 this._internalState[slice] = cloneObject(value);
-            } else {
-                this._internalState[slice] = nextState;
-            }
+            // } else {
+            //     this._internalState[slice] = nextState;
+            // }
         }
         else if (!slice && replace && replace === true) {
             this._internalState = value;
